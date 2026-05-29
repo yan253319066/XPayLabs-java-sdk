@@ -1,21 +1,23 @@
-# XPay Labs Java SDK
+# XPay Labs Java SDK — 自托管加密货币支付网关 Java / Spring Boot 开发包
 
 [English](README.md) | 中文
 
-XPay Labs 加密货币支付网关的官方 Java SDK。
+**XPay Labs Java SDK** 是 [XPay Labs](https://www.xpaylabs.com) 自托管、非托管加密货币支付网关的官方 Java 客户端。基于 Spring Boot 3.4+ 构建，支持在 TRON (TRC20)、20+ EVM 链（Ethereum、BNB Chain、Polygon、Arbitrum、Optimism、Base）和 SUI 上接收 USDT/USDC 支付，零网关手续费。
+
+通过 Docker 在自己的服务器上部署 XPay Labs 网关，配合本 SDK 集成，私钥和资金结算完全由你掌控 — 无第三方托管、无月费、无需 KYC。
 
 ## 功能特性
 
-- 创建加密货币付款订单（商户向用户发送加密货币）
-- 创建加密货币收款订单（商户从用户接收加密货币）
-- 查询订单状态
-- 获取支持的加密货币和链
-- 验证和解析 Webhook 通知
-- 兼容 Spring Boot 3.4.6
+- 创建加密货币收款订单（商户接收加密货币）
+- 创建加密货币付款订单（商户发送加密货币）
+- 实时订单状态查询
+- HMAC-SHA256 Webhook 签名验证（Spring Boot 集成）
+- OkHttp HTTP 客户端，支持超时配置
+- Jackson JSON 序列化
+- Lombok Builder 模式请求构建
+- 结构化异常处理 `XPayApiException`
 
 ## 安装
-
-在 Maven 项目中添加依赖：
 
 ```xml
 <dependency>
@@ -25,93 +27,33 @@ XPay Labs 加密货币支付网关的官方 Java SDK。
 </dependency>
 ```
 
-或者使用 Gradle：
-
-```groovy
-implementation 'io.xpay:xpay-java-sdk:0.1.0'
-```
-
 ## 快速开始
 
 ```java
-import io.xpay.sdk.XPay;
-import io.xpay.sdk.XPayConfig;
-import io.xpay.sdk.model.request.PayoutRequest;
-import io.xpay.sdk.model.response.ApiResponse;
-import io.xpay.sdk.model.response.PayoutData;
-
-// 使用 API 凭证初始化 SDK
 XPay xpay = new XPay(XPayConfig.builder()
         .apiKey("your-api-token")
         .apiSecret("your-api-secret")
         .baseUrl("https://api.xpaylabs.com")
         .build());
 
-// 创建付款订单
-try {
-    PayoutRequest request = PayoutRequest.builder()
-            .amount(100.0)
-            .symbol("USDT")
-            .chain("TRON")
-            .orderId("order-" + System.currentTimeMillis())
-            .uid("user123")
-            .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp")
-            .build();
+PayoutRequest request = PayoutRequest.builder()
+        .amount(100.0)
+        .symbol("USDT")
+        .chain("TRON")
+        .uid("user123")
+        .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp")
+        .build();
 
-    ApiResponse<PayoutData> response = xpay.createPayout(request);
-    System.out.println("付款订单创建成功");
-} catch (Exception e) {
-    System.err.println("创建付款订单失败: " + e.getMessage());
-}
+ApiResponse<PayoutData> response = xpay.createPayout(request);
 ```
 
-## API 参考
+## 相关资源
 
-### 配置
-
-```java
-XPay xpay = new XPay(XPayConfig.builder()
-        .apiKey("your-api-token")
-        .apiSecret("your-api-secret")
-        .baseUrl("https://api.xpaylabs.com")
-        .connectTimeout(30000)
-        .readTimeout(30000)
-        .build());
-```
-
-### 付款订单
-
-创建商户向用户发送加密货币的订单。
-
-### 收款订单
-
-创建商户从用户接收加密货币的订单。
-
-### 订单状态
-
-查询指定订单的当前状态。
-
-### 支持的币种
-
-获取平台支持的加密货币列表。
-
-### Webhook
-
-验证和解析 Webhook 通知。
-
-## 错误处理
-
-SDK 在 API 返回错误时会抛出 `XPayApiException`：
-
-```java
-try {
-    ApiResponse<PayoutData> response = xpay.createPayout(request);
-} catch (XPayApiException e) {
-    System.err.println("API 错误: " + e.getMessage());
-    System.err.println("状态码: " + e.getStatusCode());
-    System.err.println("错误码: " + e.getErrorCode());
-}
-```
+- [XPay Labs 官网](https://www.xpaylabs.com)
+- [部署文档](https://www.xpaylabs.com/docs)
+- [Node.js SDK](https://github.com/yan253319066/XPayLabs-node-sdk)
+- [React 示例](https://github.com/yan253319066/XPayLabs-example-react)
+- [Vue 3 示例](https://github.com/yan253319066/XPayLabs-example-vue)
 
 ## 许可证
 

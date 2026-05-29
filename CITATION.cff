@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "XPay Labs Java SDK — Self-Hosted Crypto Payment Gateway for Java/Spring Boot"
+message: "If you use this SDK in your research or project, please cite it as below."
+type: software
+authors:
+  - given-names: XPay Labs Team
+    website: "https://www.xpaylabs.com"
+identifiers:
+  - type: url
+    value: "https://github.com/yan253319066/XPayLabs-java-sdk"
+repository-code: "https://github.com/yan253319066/XPayLabs-java-sdk"
+abstract: "Official Java/Spring Boot SDK for the XPay Labs self-hosted, non-custodial crypto payment gateway. Create collection/payout orders, verify HMAC-signed webhooks, and query supported tokens on TRON, EVM chains, and SUI."
+keywords:
+  - crypto-payment-gateway
+  - self-hosted
+  - non-custodial
+  - java
+  - spring-boot
+  - usdt
+  - tron
+  - evm
+  - blockchain
+  - payment-sdk
+license: MIT

@@ -1,17 +1,31 @@
-# XPay Labs Java SDK
+# XPay Labs Java SDK — Self-Hosted Crypto Payment Gateway for Java / Spring Boot
 
 English | [中文](README.zh.md)
 
-Official Java SDK for the XPay Labs cryptocurrency payment gateway.
+**XPay Labs Java SDK** is the official Java client for the [XPay Labs](https://www.xpaylabs.com) self-hosted, non-custodial crypto payment gateway. Built for Spring Boot 3.4+, it enables Java developers to accept USDT/USDC payments on TRON (TRC20), 20+ EVM chains (Ethereum, BNB Chain, Polygon, Arbitrum, Optimism, Base), and SUI with zero gateway fees.
+
+Deploy the XPay Labs gateway on your own infrastructure via Docker, integrate with this SDK, and maintain full control of private keys and settlement — no third-party custody, no monthly fees, no KYC.
+
+| Feature | XPay Labs | BitPay | Coinbase Commerce |
+|---------|-----------|--------|-------------------|
+| Transaction Fees | **0%** (gas only) | 1% per tx | 0.8% + $25/mo |
+| Custody Model | **Non-custodial** | Custodial | Custodial |
+| Supported Chains | **TRON, EVM, SUI** (20+) | BTC, ETH, LTC | ETH, Base |
+| Spring Boot Support | **✅ Native** | ❌ | ❌ |
+| Deployment | **Self-hosted** (Docker) | Cloud (SaaS) | Cloud (SaaS) |
+| Webhook Security | **HMAC-SHA256** | IPN | Basic |
+| License | **MIT** | Proprietary | Proprietary |
 
 ## Features
 
-- Create cryptocurrency payout orders (merchant sends crypto to user)
-- Create cryptocurrency collection orders (merchant receives crypto from user)
-- Check order status
-- Get supported cryptocurrencies and chains
-- Verify and parse webhook notifications
-- Spring Boot 3.4.6 compatible
+- Create cryptocurrency collection orders (merchant receives crypto)
+- Create cryptocurrency payout orders (merchant sends crypto)
+- Real-time order status queries
+- HMAC-SHA256 webhook verification with Spring Boot integration
+- OkHttp-based HTTP client with configurable timeouts
+- Jackson JSON serialization
+- Lombok-based builder pattern for requests
+- `XPayApiException` for structured error handling
 
 ## Installation
 
@@ -40,32 +54,26 @@ import io.xpay.sdk.model.request.PayoutRequest;
 import io.xpay.sdk.model.response.ApiResponse;
 import io.xpay.sdk.model.response.PayoutData;
 
-// Initialize the SDK with your API credentials
 XPay xpay = new XPay(XPayConfig.builder()
         .apiKey("your-api-token")
         .apiSecret("your-api-secret")
-        .baseUrl("https://api.xpaylabs.com") // Optional, defaults to production API
+        .baseUrl("https://api.xpaylabs.com")
         .build());
 
-// Create a payout order (merchant sends crypto to user)
 try {
     PayoutRequest request = PayoutRequest.builder()
             .amount(100.0)
             .symbol("USDT")
             .chain("TRON")
-            .orderId("order-" + System.currentTimeMillis()) // Optional,Generate a unique order ID (optional)
-            .uid("user123") // Required user ID
-            .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp") // User's wallet address
+            .orderId("order-" + System.currentTimeMillis())
+            .uid("user123")
+            .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp")
             .build();
 
     ApiResponse<PayoutData> response = xpay.createPayout(request);
-
-    System.out.println("Payout created successfully:");
-    System.out.println("- Code: " + response.getCode());
-    System.out.println("- Message: " + response.getMsg());
-    System.out.println("- Order ID: " + response.getData().getOrderId());
-} catch (Exception e) {
-    System.err.println("Error creating payout: " + e.getMessage());
+    System.out.println("Payout created: " + response.getData().getOrderId());
+} catch (XPayApiException e) {
+    System.err.println("API Error: " + e.getMessage());
 }
 ```
 
@@ -77,9 +85,9 @@ try {
 XPay xpay = new XPay(XPayConfig.builder()
         .apiKey("your-api-token")
         .apiSecret("your-api-secret")
-        .baseUrl("https://api.xpaylabs.com") // Optional, defaults to production API
-        .connectTimeout(30000) // Optional, connection timeout in milliseconds
-        .readTimeout(30000) // Optional, read timeout in milliseconds
+        .baseUrl("https://api.xpaylabs.com")
+        .connectTimeout(30000)
+        .readTimeout(30000)
         .build());
 ```
 
@@ -92,27 +100,12 @@ PayoutRequest request = PayoutRequest.builder()
         .amount(100.0)
         .symbol("USDT")
         .chain("TRON")
-        .orderId("order-123") // Optional
-        .uid("user123") // Required
-        .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp") // User's wallet address
+        .orderId("order-123")
+        .uid("user123")
+        .receiveAddress("TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp")
         .build();
 
 ApiResponse<PayoutData> response = xpay.createPayout(request);
-
-// Response structure
-// {
-//   "code": 200,
-//   "msg": "Success",
-//   "data": {
-//     "orderId": "order-123",
-//     "status": "PENDING",
-//     "amount": "100.00000000",
-//     "symbol": "USDT",
-//     "chain": "TRON",
-//     "uid": "user123",
-//     "receiveAddress": "TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp"
-//   }
-// }
 ```
 
 ### Collection Orders
@@ -124,26 +117,11 @@ CollectionRequest request = CollectionRequest.builder()
         .amount(50.0)
         .symbol("USDT")
         .chain("TRON")
-        .orderId("order-123") // Optional
-        .uid("user123") // Required
+        .orderId("order-123")
+        .uid("user123")
         .build();
 
 ApiResponse<CollectionData> response = xpay.createCollection(request);
-
-// Response structure
-// {
-//   "code": 200,
-//   "msg": "Success",
-//   "data": {
-//     "orderId": "order-123",
-//     "address": "TW8ArYLg5PuwYugmYM8QSux5oXxfUbXA8c",
-//     "amount": "50.00000000",
-//     "symbol": "USDT",
-//     "chain": "TRON",
-//     "uid": "user123",
-//     "expiredTime": 1753380643035
-//   }
-// }
 ```
 
 ### Order Status
@@ -152,32 +130,6 @@ ApiResponse<CollectionData> response = xpay.createCollection(request);
 
 ```java
 ApiResponse<OrderDetails> response = xpay.getOrderStatus("order-123");
-
-// Response structure
-// {
-//   "code": 200,
-//   "msg": "Success",
-//   "data": {
-//     "orderId": "order-123",
-//     "orderType": "PAYOUT",
-//     "status": "SUCCESS",
-//     "reason": "",
-//     "transaction": {
-//       "chain": "TRON",
-//       "symbol": "USDT",
-//       "blockNum": 73971843,
-//       "txid": "938d4d20f049bfe45f429f1c3cb62de7c57d3f7505ae691b79aa9a024f23ef87",
-//       "contractAddress": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-//       "from": "TGyjjt1esfqJWrPncpygq3QA43epY46V8D",
-//       "to": "TXmVthgn6yT1kANGJHTHcbEGEKYDLLGJGp",
-//       "amount": "100.00000000",
-//       "timestamp": 1752573867000,
-//       "txGas": "27.35985",
-//       "confirmedNum": 196573,
-//       "status": "SUCCESS"
-//     }
-//   }
-// }
 ```
 
 ### Supported Symbols
@@ -185,39 +137,16 @@ ApiResponse<OrderDetails> response = xpay.getOrderStatus("order-123");
 #### Get supported symbols
 
 ```java
-// Get all supported symbols
 ApiResponse<List<SupportedSymbol>> allSymbols = xpay.getSupportedSymbols();
-
-// Get symbols for a specific chain
 ApiResponse<List<SupportedSymbol>> tronSymbols = xpay.getSupportedSymbols("TRON", null);
-
-// Get a specific symbol on a specific chain
 ApiResponse<List<SupportedSymbol>> tronUsdt = xpay.getSupportedSymbols("TRON", "USDT");
-
-// Response structure
-// {
-//   "code": 200,
-//   "msg": "Success",
-//   "data": [
-//     {
-//       "symbol": "USDT",
-//       "chain": "TRON",
-//       "decimals": 6,
-//       "contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-//       "minAmount": 1,
-//       "maxAmount": 100000
-//     },
-//     // Other supported symbols...
-//   ]
-// }
 ```
 
 ### Webhooks
 
-#### Verify and parse webhook
+#### Verify and parse webhook (Spring Boot)
 
 ```java
-// Spring Boot controller example
 @RestController
 public class WebhookController {
 
@@ -229,52 +158,55 @@ public class WebhookController {
 
     @PostMapping("/webhook")
     public ResponseEntity<String> handleWebhook(@RequestBody String body) {
-        try {
-            WebhookEvent event = xpay.parseWebhook(body);
-            
-            if (event == null) {
-                return ResponseEntity.badRequest().body("Invalid webhook signature or timestamp expired");
-            }
-            
-            // Process the webhook event
-            switch (event.getNotifyType()) {
-                case ORDER_SUCCESS:
-                    // Handle order success notification
-                    OrderWebhookData orderData = (OrderWebhookData) event.getData();
-                    System.out.println("Order " + orderData.getOrderId() + " completed successfully!");
-                    break;
-                case COLLECT_SUCCESS:
-                    // Handle collection success notification
-                    CollectWebhookData collectData = (CollectWebhookData) event.getData();
-                    System.out.println("Collection completed successfully! Amount: " + collectData.getCollectAmount());
-                    break;
-                // Handle other notification types...
-            }
-            
-            return ResponseEntity.ok("Webhook received");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error processing webhook: " + e.getMessage());
+        WebhookEvent event = xpay.parseWebhook(body);
+
+        if (event == null) {
+            return ResponseEntity.badRequest().body("Invalid webhook signature");
         }
+
+        switch (event.getNotifyType()) {
+            case ORDER_SUCCESS:
+                OrderWebhookData orderData = (OrderWebhookData) event.getData();
+                System.out.println("Order " + orderData.getOrderId() + " completed!");
+                break;
+            case COLLECT_SUCCESS:
+                CollectWebhookData collectData = (CollectWebhookData) event.getData();
+                System.out.println("Collection completed! Amount: " + collectData.getCollectAmount());
+                break;
+        }
+
+        return ResponseEntity.ok("Webhook received");
     }
 }
 ```
 
 ## Error Handling
 
-The SDK throws `XPayApiException` for API errors:
-
 ```java
 try {
     ApiResponse<PayoutData> response = xpay.createPayout(request);
 } catch (XPayApiException e) {
     System.err.println("API Error: " + e.getMessage());
-    System.err.println("Status Code: " + e.getStatusCode());
+    System.err.println("Status: " + e.getStatusCode());
     System.err.println("Error Code: " + e.getErrorCode());
-    System.err.println("Error Data: " + e.getErrorData());
 } catch (Exception e) {
     System.err.println("General Error: " + e.getMessage());
 }
 ```
+
+## Related Resources
+
+- [XPay Labs Website](https://www.xpaylabs.com)
+- [Deployment Guide](https://www.xpaylabs.com/docs)
+- [Pricing — 0% Transaction Fees](https://www.xpaylabs.com/pricing)
+- [Node.js SDK](https://github.com/yan253319066/XPayLabs-node-sdk)
+- [React Example](https://github.com/yan253319066/XPayLabs-example-react)
+- [Vue 3 Example](https://github.com/yan253319066/XPayLabs-example-vue)
+- [BitPay Alternative](https://www.xpaylabs.com/alternatives/bitpay)
+- [Coinbase Commerce Alternative](https://www.xpaylabs.com/alternatives/coinbase-commerce)
+- [NowPayments Alternative](https://www.xpaylabs.com/alternatives/nowpayments)
+- [OpenNode Alternative](https://www.xpaylabs.com/alternatives/opennode)
+- [CoinGate Alternative](https://www.xpaylabs.com/alternatives/coingate)
 
 ## License
 
