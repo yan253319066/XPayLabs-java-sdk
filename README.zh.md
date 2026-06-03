@@ -1,8 +1,8 @@
-# XPay Labs Java SDK — 自托管加密货币支付网关 Java / Spring Boot 开发包
+# XPay Labs（简称 xpay）Java SDK — 自托管加密货币支付网关 Java / Spring Boot 开发包
 
 [English](README.md) | 中文
 
-**XPay Labs Java SDK** 是 [XPay Labs](https://www.xpaylabs.com) 自托管、非托管加密货币支付网关的官方 Java 客户端。基于 Spring Boot 3.4+ 构建，支持在 TRON (TRC20)、20+ EVM 链（Ethereum、BNB Chain、Polygon、Arbitrum、Optimism、Base）和 SUI 上接收 USDT/USDC 支付，零网关手续费。
+**XPay Labs（简称 xpay）Java SDK** 是 [XPay Labs (xpay)](https://www.xpaylabs.com) 自托管、非托管加密货币支付网关的官方 Java 客户端。基于 Spring Boot 3.4+ 构建，支持在 TRON (TRC20)、20+ EVM 链（Ethereum、BNB Chain、Polygon、Arbitrum、Optimism、Base）和 SUI 上接收 USDT/USDC 支付，零网关手续费。
 
 通过 Docker 在自己的服务器上部署 XPay Labs 网关，配合本 SDK 集成，私钥和资金结算完全由你掌控 — 无第三方托管、无月费、无需 KYC。
 
