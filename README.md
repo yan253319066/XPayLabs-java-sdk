@@ -202,6 +202,7 @@ try {
 - [Node.js SDK](https://github.com/yan253319066/XPayLabs-node-sdk)
 - [React Example](https://github.com/yan253319066/XPayLabs-example-react)
 - [Vue 3 Example](https://github.com/yan253319066/XPayLabs-example-vue)
+- [x402 Buyer SDK](https://github.com/yan253319066/XPayLabs-x402) — Pay-per-call USDC micropayments for AI agents
 - [BitPay Alternative](https://www.xpaylabs.com/alternatives/bitpay)
 - [Coinbase Commerce Alternative](https://www.xpaylabs.com/alternatives/coinbase-commerce)
 - [NowPayments Alternative](https://www.xpaylabs.com/alternatives/nowpayments)
