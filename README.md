@@ -33,7 +33,7 @@ Add the dependency to your Maven project:
 
 ```xml
 <dependency>
-    <groupId>io.xpay</groupId>
+    <groupId>com.xpaylabs</groupId>
     <artifactId>xpay-java-sdk</artifactId>
     <version>0.1.0</version>
 </dependency>
@@ -42,17 +42,17 @@ Add the dependency to your Maven project:
 Or for Gradle:
 
 ```groovy
-implementation 'io.xpay:xpay-java-sdk:0.1.0'
+implementation 'com.xpaylabs:xpay-java-sdk:0.1.0'
 ```
 
 ## Quick Start
 
 ```java
-import io.xpay.sdk.XPay;
-import io.xpay.sdk.XPayConfig;
-import io.xpay.sdk.model.request.PayoutRequest;
-import io.xpay.sdk.model.response.ApiResponse;
-import io.xpay.sdk.model.response.PayoutData;
+import com.xpaylabs.sdk.XPay;
+import com.xpaylabs.sdk.XPayConfig;
+import com.xpaylabs.sdk.model.request.PayoutRequest;
+import com.xpaylabs.sdk.model.response.ApiResponse;
+import com.xpaylabs.sdk.model.response.PayoutData;
 
 XPay xpay = new XPay(XPayConfig.builder()
         .apiKey("your-api-token")

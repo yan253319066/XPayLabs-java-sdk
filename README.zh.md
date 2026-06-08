@@ -21,7 +21,7 @@
 
 ```xml
 <dependency>
-    <groupId>io.xpay</groupId>
+    <groupId>com.xpaylabs</groupId>
     <artifactId>xpay-java-sdk</artifactId>
     <version>0.1.0</version>
 </dependency>
