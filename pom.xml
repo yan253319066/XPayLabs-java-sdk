@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>XPay Labs Java SDK</name>
-    <description>Self-hosted, non-custodial crypto payment gateway SDK for Java / Spring Boot. Accept USDT/USDC on TRON TRC20, EVM chains (Ethereum, BNB Chain, Polygon, Arbitrum, Optimism, Base), and SUI with zero gateway fees.</description>
+    <description>Self-hosted, non-custodial crypto payment gateway Java SDK. Accept USDT/USDC on TRON TRC20, EVM chains (Ethereum, BNB Chain, Polygon, Arbitrum, Optimism, Base), and SUI with zero gateway fees.</description>
     <url>https://github.com/yan253319066/XPayLabs-java-sdk</url>
 
     <licenses>

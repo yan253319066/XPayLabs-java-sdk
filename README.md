@@ -1,8 +1,8 @@
-# XPay Labs (xpay) Java SDK — Self-Hosted Crypto Payment Gateway for Java / Spring Boot
+# XPay Labs (xpay) Java SDK — Self-Hosted Crypto Payment Gateway Java Client
 
 English | [中文](README.zh.md)
 
-**XPay Labs (xpay) Java SDK** is the official Java client for [XPay Labs (xpay)](https://www.xpaylabs.com) — the self-hosted, non-custodial crypto payment gateway. Built for Spring Boot 3.4+, it enables Java developers to accept USDT/USDC payments on TRON (TRC20), 20+ EVM chains (Ethereum, BNB Chain, Polygon, Arbitrum, Optimism, Base), and SUI with zero gateway fees.
+**XPay Labs (xpay) Java SDK** is the official Java client for [XPay Labs (xpay)](https://www.xpaylabs.com) — the self-hosted, non-custodial crypto payment gateway. It enables Java developers to accept USDT/USDC payments on TRON (TRC20), 20+ EVM chains (Ethereum, BNB Chain, Polygon, Arbitrum, Optimism, Base), and SUI with zero gateway fees.
 
 Deploy the XPay Labs gateway on your own infrastructure via Docker, integrate with this SDK, and maintain full control of private keys and settlement — no third-party custody, no monthly fees, no KYC.
 
