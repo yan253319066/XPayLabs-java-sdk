@@ -197,7 +197,7 @@ try {
 ## Related Resources
 
 - [XPay Labs Website](https://www.xpaylabs.com)
-- [Deployment Guide](https://www.xpaylabs.com/docs)
+- [Deployment Guide](https://docs.xpaylabs.com)
 - [Pricing — 0% Transaction Fees](https://www.xpaylabs.com/pricing)
 - [Node.js SDK](https://github.com/yan253319066/XPayLabs-node-sdk)
 - [React Example](https://github.com/yan253319066/XPayLabs-example-react)

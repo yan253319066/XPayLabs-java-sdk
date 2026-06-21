@@ -50,11 +50,16 @@ ApiResponse<PayoutData> response = xpay.createPayout(request);
 ## 相关资源
 
 - [XPay Labs 官网](https://www.xpaylabs.com)
-- [部署文档](https://www.xpaylabs.com/docs)
+- [部署文档](https://docs.xpaylabs.com)
 - [Node.js SDK](https://github.com/yan253319066/XPayLabs-node-sdk)
 - [React 示例](https://github.com/yan253319066/XPayLabs-example-react)
 - [Vue 3 示例](https://github.com/yan253319066/XPayLabs-example-vue)
 - [x402 买家 SDK](https://github.com/yan253319066/XPayLabs-x402) — AI 代理按次付费 USDC 微支付
+
+## 仓库
+
+**GitHub:** [yan253319066/XPayLabs-java-sdk](https://github.com/yan253319066/XPayLabs-java-sdk)
+**Gitee (镜像):** [XPayLabs/XPayLabs-java-sdk](https://gitee.com/XPayLabs/XPayLabs-java-sdk)
 
 ## 许可证
 
