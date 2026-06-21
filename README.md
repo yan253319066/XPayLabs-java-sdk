@@ -209,6 +209,11 @@ try {
 - [OpenNode Alternative](https://www.xpaylabs.com/alternatives/opennode)
 - [CoinGate Alternative](https://www.xpaylabs.com/alternatives/coingate)
 
+## Repository
+
+**GitHub:** [yan253319066/XPayLabs-java-sdk](https://github.com/yan253319066/XPayLabs-java-sdk)
+**Gitee (mirror):** [XPayLabs/XPayLabs-java-sdk](https://gitee.com/XPayLabs/XPayLabs-java-sdk)
+
 ## License
 
 MIT
